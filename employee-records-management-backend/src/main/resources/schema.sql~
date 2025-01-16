@@ -1,0 +1,35 @@
+CREATE TABLE IF NOT EXISTS `department` (
+     `id` INT AUTO_INCREMENT PRIMARY KEY,
+     `name` VARCHAR(255) NOT NULL,
+     `created_at` DATE NOT NULL,
+     `created_by` VARCHAR(20) NOT NULL,
+     `updated_at` DATE DEFAULT NULL,
+     `updated_by` VARCHAR(20) DEFAULT NULL
+);
+CREATE TABLE IF NOT EXISTS `employee` (
+      `id` INT AUTO_INCREMENT PRIMARY KEY,
+      `employee_id` VARCHAR(50) UNIQUE NOT NULL,
+      `full_name` VARCHAR(255) NOT NULL,
+      `job_title` VARCHAR(255) DEFAULT NULL,
+      `department_id` INT NOT NULL,
+      `hire_date` DATE NOT NULL,
+      `employment_status` VARCHAR(20) DEFAULT 'Active',
+      `email` VARCHAR(255) UNIQUE NOT NULL,
+      `phone_number` VARCHAR(20) DEFAULT NULL,
+      `address` TEXT DEFAULT NULL,
+      `created_at` DATE NOT NULL,
+      `created_by` VARCHAR(20) NOT NULL,
+      `updated_at` DATE DEFAULT NULL,
+      `updated_by` VARCHAR(20) DEFAULT NULL,
+      FOREIGN KEY (`department_id`) REFERENCES `department`(`id`) ON DELETE CASCADE
+);
+
+
+
+INSERT INTO `department` (`name`, `created_at`, `created_by`, `updated_at`, `updated_by`)
+VALUES
+    ('Human Resources', '2025-01-01', 'System', NULL, NULL),
+    ('Finance', '2025-01-02', 'System', NULL, NULL),
+    ('IT', '2025-01-03', 'System', NULL, NULL),
+    ('Marketing', '2025-01-04', 'System', NULL, NULL),
+    ('Operations', '2025-01-05', 'System', NULL, NULL);

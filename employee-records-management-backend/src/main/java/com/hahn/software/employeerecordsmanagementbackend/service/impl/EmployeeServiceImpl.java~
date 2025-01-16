@@ -1,0 +1,115 @@
+package com.hahn.software.employeerecordsmanagementbackend.service.impl;
+
+import com.hahn.software.employeerecordsmanagementbackend.dto.EmployeeDto;
+import com.hahn.software.employeerecordsmanagementbackend.entity.Department;
+import com.hahn.software.employeerecordsmanagementbackend.entity.Employee;
+import com.hahn.software.employeerecordsmanagementbackend.exception.ResourceNotFoundException;
+import com.hahn.software.employeerecordsmanagementbackend.mapper.EmployeeMapper;
+import com.hahn.software.employeerecordsmanagementbackend.repository.DepartmentRepository;
+import com.hahn.software.employeerecordsmanagementbackend.repository.EmployeeRepository;
+import com.hahn.software.employeerecordsmanagementbackend.service.IEmployeeService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service @AllArgsConstructor
+public class EmployeeServiceImpl implements IEmployeeService {
+    DepartmentRepository departmentRepository;
+    EmployeeRepository employeeRepository;
+    /**
+     * Creates a new employee.
+     *
+     * This method performs the following operations:
+     * - Checks if an employee with the given email already exists in the database.
+     * - Verifies if the department exists based on the department name.
+     * - Sets a unique employee ID.
+     * - Maps the provided employee DTO to an employee entity.
+     * - Saves the employee entity to the database.
+     *
+     * @param employeeDto The EmployeeDto object containing the employee details to be created.
+     * @throws ResourceNotFoundException if the email is already taken or if the department is not found.
+     */
+    @Override
+    public void createEmployee(EmployeeDto employeeDto) {
+        employeeRepository.findByEmail(employeeDto.getEmail()).ifPresent(
+                employee -> {throw new ResourceNotFoundException("Employee", "email", employeeDto.getEmail());}
+        );
+        Department department = departmentRepository.findByName(employeeDto.getDepartmentName()).orElseThrow(
+                () -> new ResourceNotFoundException("Department", "name", employeeDto.getDepartmentName())
+        );
+        employeeDto.setEmployeeId(UUID.randomUUID().toString());
+        Employee employee = EmployeeMapper.mapToEmployee(employeeDto, new Employee(), department);
+        employeeRepository.save(employee);
+    }
+
+    /**
+     * Fetches an employee by their unique employee ID.
+     *
+     * This method retrieves the employee from the database using the provided employee ID.
+     * If the employee does not exist, a ResourceNotFoundException is thrown.
+     *
+     * @param employeeId The unique identifier of the employee to be fetched.
+     * @return EmployeeDto The DTO containing the employee's details.
+     * @throws ResourceNotFoundException if the employee with the given ID does not exist.
+     */
+    @Override
+    public EmployeeDto fetchEmployee(String employeeId) {
+        Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(
+                () -> new ResourceNotFoundException("Employee", "employeeId", employeeId)
+        );
+        return EmployeeMapper.mapToEmployeeDto(employee, EmployeeDto.builder().build());
+    }
+
+    @Override
+    public List<EmployeeDto> fetchAllEmployees() {
+        return null;
+    }
+
+    /**
+     * Updates an existing employee's information.
+     *
+     * This method performs the following operations:
+     * - Verifies that the employee with the given ID and email exists.
+     * - Verifies that the department exists based on the provided department name.
+     * - Updates the employee's details and saves the updated entity to the database.
+     *
+     * @param employeeDto The EmployeeDto object containing the updated employee details.
+     * @return boolean Returns true if the employee was updated successfully.
+     * @throws ResourceNotFoundException if the employee does not exist or if the department is not found.
+     */
+    @Override
+    public boolean updateEmployee(EmployeeDto employeeDto) {
+        Employee existingEmployee = employeeRepository.findByEmployeeIdAndEmail(employeeDto.getEmployeeId(), employeeDto.getEmail()).orElseThrow(
+                () -> new ResourceNotFoundException("Employee", "employeeId or email", employeeDto.getEmployeeId() + " " + employeeDto.getEmail())
+        );
+        Department department = departmentRepository.findByName(employeeDto.getDepartmentName()).orElseThrow(
+                () -> new ResourceNotFoundException("Department", "name", employeeDto.getDepartmentName())
+        );
+         existingEmployee = EmployeeMapper.mapToEmployee(employeeDto, existingEmployee, department);
+        employeeRepository.save(existingEmployee);
+        return true;
+    }
+    /**
+     * Deletes an employee by their unique employee ID.
+     *
+     * This method performs the following operations:
+     * - Verifies that the employee with the given ID exists in the database.
+     * - Deletes the employee if found.
+     *
+     * @param employeeId The unique identifier of the employee to be deleted.
+     * @return boolean Returns true if the employee was deleted successfully.
+     * @throws ResourceNotFoundException if the employee does not exist.
+     */
+    @Override
+    public boolean deleteEmployee(String employeeId) {
+        Employee existingEmployee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(
+                () -> new ResourceNotFoundException("Employee", "employeeId", employeeId)
+        );
+        employeeRepository.delete(existingEmployee);
+        return true;
+    }
+
+
+}

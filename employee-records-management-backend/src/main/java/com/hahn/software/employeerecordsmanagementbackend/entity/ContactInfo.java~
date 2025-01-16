@@ -1,0 +1,11 @@
+package com.hahn.software.employeerecordsmanagementbackend.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.*;
+
+@Entity
+@Table(name = "contact_info")
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder @ToString
+public class ContactInfo {
+}
