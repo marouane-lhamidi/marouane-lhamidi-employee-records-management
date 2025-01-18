@@ -88,6 +88,11 @@ public class DepartmentServiceImpl implements IDepartmentService {
         Department department = departmentRepository.findById(departmentDto.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("Department", "ID", departmentDto.getId().toString())
         );
+        departmentRepository.findByName(departmentDto.getName()).ifPresent(
+                dep -> {
+                    throw new DepartmentAlreadyExistsException("Department already exists with name " + departmentDto.getName());
+                }
+        );
         DepartmentMapper.mapToDepartment(departmentDto, department);
         departmentRepository.save(department);
         return true;

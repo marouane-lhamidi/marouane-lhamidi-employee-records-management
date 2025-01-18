@@ -107,7 +107,7 @@ public class EmployeeController {
                     )
             )
     })
-    @GetMapping("/fetch-all")
+    @GetMapping("/fetchAll")
     public ResponseEntity<List<EmployeeDto>> fetchAllEmployees() {
         List<EmployeeDto> employeeDtos = employeeService.fetchAllEmployees();
         return ResponseEntity.status(HttpStatus.OK).body(employeeDtos);
