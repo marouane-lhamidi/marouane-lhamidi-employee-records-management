@@ -48,6 +48,8 @@ public class ExceptionHandling {
                 return responseJson.get("fullName").asText();
             } else if (responseJson.has("email")) {
                 return responseJson.get("email").asText();
+            }else if (responseJson.has("hireDate")) {
+                return responseJson.get("hireDate").asText();
             }
         } catch (Exception e) {
             return "Failed to parse error: " + e.getMessage();

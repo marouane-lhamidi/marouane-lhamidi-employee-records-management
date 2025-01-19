@@ -3,6 +3,7 @@ package com.hahn.software.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hahn.software.config.ConfigLoader;
 import com.hahn.software.model.EmployeeDto;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 public class EmployeeBackendService {
-    private static final String BASE_URL = "http://localhost:8080/api/employees";
+    private static final String BASE_URL = ConfigLoader.get("api.backend") + "/api/employees";
 
     public static List<EmployeeDto> fetchAllEmployees() {
         HttpClient httpClient = HttpClient.newHttpClient();

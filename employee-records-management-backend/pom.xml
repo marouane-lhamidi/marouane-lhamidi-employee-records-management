@@ -91,6 +91,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>back-employee-records-management</finalName>
 	</build>
 
 </project>

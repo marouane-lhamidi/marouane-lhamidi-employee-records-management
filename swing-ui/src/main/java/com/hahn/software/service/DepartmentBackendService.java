@@ -3,6 +3,7 @@ package com.hahn.software.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hahn.software.config.ConfigLoader;
 import com.hahn.software.model.DepartmentDto;
 
 import java.io.UnsupportedEncodingException;
@@ -15,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class DepartmentBackendService {
-    private static final String BASE_URL = "http://localhost:8080/api/departments";
+    private static final String BASE_URL = ConfigLoader.get("api.backend") + "/api/departments";
 
     private static final HttpClient httpClient = HttpClient.newHttpClient();
     private static final ObjectMapper objectMapper = new ObjectMapper();
