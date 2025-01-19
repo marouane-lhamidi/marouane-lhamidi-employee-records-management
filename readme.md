@@ -6,7 +6,7 @@ The **Employee Records Management System** is an internal application designed t
 
 ### Key Features
 1. **Employee Data Management**
-  - Manages the following attributes:
+- Manages the following attributes:
     - Full Name
     - Employee ID
     - Job Title
@@ -17,37 +17,37 @@ The **Employee Records Management System** is an internal application designed t
     - Address
 
 2. **Role-Based Permissions**
-  - **HR Personnel**:
+- **HR Personnel**:
     - Full CRUD (Create, Read, Update, Delete) operations on all employee data.
-  - **Managers**:
+- **Managers**:
     - Limited editing rights for employees within their department.
-  - **Administrators**:
+- **Administrators**:
     - Full system access, including configuration settings and user permission management.
 
 3. **Audit Trail**
-  - Logs all changes to employee records with detailed information about the user who made the modification and a timestamp.
+- Logs all changes to employee records with detailed information about the user who made the modification and a timestamp.
 
 4. **Search and Filtering**
-  - Allows searching by:
+- Allows searching by:
     - Name
     - Employee ID
     - Department
     - Job Title
-  - Provides filtering based on:
+- Provides filtering based on:
     - Employment Status
     - Department
     - Hire Date
 
 5. **Validation**
-  - Ensures:
+- Ensures:
     - Valid email formats.
     - Unique Employee IDs to prevent duplication.
 
 6. **Reporting**
-  - Generates basic reports for insights into employee data.
+- Generates basic reports for insights into employee data.
 
 7. **Swagger Documentation**
-  - Comprehensive documentation of the API endpoints using **Swagger OpenAPI**, enabling developers to test and understand the backend functionality easily.
+- Comprehensive documentation of the API endpoints using **Swagger OpenAPI**, enabling developers to test and understand the backend functionality easily.
 
 ---
 
@@ -55,29 +55,34 @@ The **Employee Records Management System** is an internal application designed t
 
 ### Completed Tasks
 1. **Backend Development**:
-  - Built using **Spring Boot**, ensuring scalability and modularity.
-  - CRUD operations implemented with robust validation.
-  - Integrated an in-memory **H2 database** for rapid development and testing.
-  - Added detailed **Swagger documentation** for all API endpoints.
+- Built using **Spring Boot**, ensuring scalability and modularity.
+- CRUD operations implemented with robust validation and detailed exception handling to ensure
+  consistent and informative responses for all API endpoints.
+- Integrated an in-memory **H2 database** for rapid development and testing, with detailed logging
+  and error messages.
+- Added detailed **Swagger documentation** for all API endpoints, including parameter descriptions,
+  response types and examples.
+- Exception handling and validation for all API endpoints.
+
 
 ![swagger.png](assets%2Fswagger.png)
 
 2. **Frontend Development**:
-  - Developed a responsive desktop UI using **Swing**.
-  - Designed with **GridBagLayout** for an intuitive user experience.
+- Developed a responsive desktop UI using **Swing**.
+- Designed with **GridBagLayout** for an intuitive user experience.
 
 ![front1.png](assets%2Ffront1.png)
 ![front2.png](assets%2Ffront2.png)
 
 3. **Docker Integration**:
-  - Application fully dockerized for consistent deployment.
-  - H2 database included within the Docker setup for seamless testing.
+- Application fully dockerized for consistent deployment.
+- H2 database included within the Docker setup for seamless testing.
 
 ![docker.png](assets%2Fdocker.png)
 
 4. **Testing**:
-  - Comprehensive unit and integration tests written using **JUnit** and **Mockito**.
-  - Created a **Postman Collection** to validate API endpoints.
+- Comprehensive unit and integration tests written using **JUnit** and **Mockito**.
+- Created a **Postman Collection** to validate API endpoints.
 
 ![test.PNG](assets%2Ftest.PNG)
 ---
@@ -89,15 +94,15 @@ Check out the demo video of the project here: [Video Demo](https://drive.google.
 
 ## Next Steps
 - **Advanced Search & Filtering**:
-  - Implement multi-criteria search capabilities.
+    - Implement multi-criteria search capabilities.
 - **Enhanced Audit Trail**:
-  - Add detailed logs for API access and user actions.
+    - Add detailed logs for API access and user actions.
 - **Reports Module**:
-  - Build report generation templates for exporting employee data.
+    - Build report generation templates for exporting employee data.
 - **Database Migration**:
-  - Transition to **Oracle SQL** for production environments.
+    - Transition to **Oracle SQL** for production environments.
 - **UI Enhancements**:
-  - Improve the Swing-based interface with better visual elements and user-friendly features.
+    - Improve the Swing-based interface with better visual elements and user-friendly features.
 
 ---
 
