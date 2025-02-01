@@ -1,25 +1,39 @@
 package com.hahn.software.employeerecordsmanagementbackend.security.service.impl;
 
 import com.hahn.software.employeerecordsmanagementbackend.security.dto.LoginRequest;
+import com.hahn.software.employeerecordsmanagementbackend.security.dto.LoginResponse;
+import com.hahn.software.employeerecordsmanagementbackend.security.dto.MyUserDetails;
+import com.hahn.software.employeerecordsmanagementbackend.security.entity.User;
+import com.hahn.software.employeerecordsmanagementbackend.security.repository.UserRepository;
 import com.hahn.software.employeerecordsmanagementbackend.security.service.IAuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service @AllArgsConstructor
 public class IAuthServiceImpl implements IAuthService {
     private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     @Override
-    public String login(LoginRequest request) {
-        // Authenticate user
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+    public LoginResponse login(LoginRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getUsername(),
+                        request
+                                .getPassword()
+                )
         );
+        User authenticatedUser = userRepository.getUserByUsername(request.getUsername())
+                .orElseThrow();
+        String jwtToken = jwtService.generateToken(new MyUserDetails(authenticatedUser));
 
-        // If successful, generate and return token (e.g., JWT)
-        return "Authenticated successfully. [JWT placeholder]";
+        return LoginResponse.builder()
+                .token(jwtToken)
+                .expiresIn(jwtService.getExpirationTime())
+                .build();
     }
 }

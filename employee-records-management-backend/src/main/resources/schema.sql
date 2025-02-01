@@ -50,7 +50,7 @@ INSERT INTO `users` (`email`, `username`, `password`, `enabled`) VALUES ('patric
 INSERT INTO `users` (`email`, `username`, `password`, `enabled`) VALUES ('alex@company.com', 'Alex', '$2a$10$.tP2OH3dEG0zms7vek4ated5AiQ.EGkncii0OpCcGq4bckS9NOULu', '1');
 INSERT INTO `users` (`email`, `username`, `password`, `enabled`) VALUES ('john@company.com', 'John', '$2a$10$E2UPv7arXmp3q0LzVzCBNeb4B4AtbTAGjkefVDnSztOwE7Gix6kea', '1');
 INSERT INTO `users` (`email`, `username`, `password`, `enabled`) VALUES ('namhm@company.com', 'Nam HM', '$2a$10$GQT8bfLMaLYwlyUysnGwDu6HMB5G.tin5MKT/uduv2Nez0.DmhnOq', '1');
-INSERT INTO `users` (`email`, `username`, `password`, `enabled`) VALUES ('admin@company.com', 'Admin', '$2a$10$IqTJTjn39IU5.7sSCDQxzu3xug6z/LPU6IF0azE/8CkHCwYEnwBX.', '1');
+INSERT INTO `users` (`email`, `username`, `password`, `enabled`) VALUES ('admin@company.com', 'admin', '$2a$10$IqTJTjn39IU5.7sSCDQxzu3xug6z/LPU6IF0azE/8CkHCwYEnwBX.', '1');
 INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (1, 3); -- user patrick has role MANAGER
 INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (2, 2); -- user alex has role HR
 INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (3, 3); -- user john has role MANAGER

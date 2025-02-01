@@ -1,4 +1,4 @@
-package com.hahn.software.employeerecordsmanagementbackend.security.config.Model;
+package com.hahn.software.employeerecordsmanagementbackend.security.dto;
 
 import com.hahn.software.employeerecordsmanagementbackend.security.entity.Role;
 import com.hahn.software.employeerecordsmanagementbackend.security.entity.User;
@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 
 public class MyUserDetails  implements UserDetails {
-
     private User user;
 
     public MyUserDetails(User user) {
