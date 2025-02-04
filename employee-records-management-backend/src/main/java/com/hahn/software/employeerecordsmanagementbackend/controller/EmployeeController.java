@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +51,7 @@ public class EmployeeController {
             )
     })
     @PostMapping("/create")
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<ResponseDto> createEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
         employeeService.createEmployee(employeeDto);
         return ResponseEntity
@@ -85,6 +87,7 @@ public class EmployeeController {
             )
     })
     @GetMapping("/fetch")
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<EmployeeDto> fetchEmployee(@RequestParam String employeeId) {
         EmployeeDto employeeDto = employeeService.fetchEmployee(employeeId);
         return ResponseEntity.status(HttpStatus.OK).body(employeeDto);
@@ -108,6 +111,7 @@ public class EmployeeController {
             )
     })
     @GetMapping("/fetchAll")
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<List<EmployeeDto>> fetchAllEmployees() {
         List<EmployeeDto> employeeDtos = employeeService.fetchAllEmployees();
         return ResponseEntity.status(HttpStatus.OK).body(employeeDtos);
@@ -134,6 +138,7 @@ public class EmployeeController {
             )
     })
     @PutMapping("/update")
+    @PreAuthorize("hasAnyAuthority('UPDATE', 'LIMITED_UPDATE')")
     public ResponseEntity<ResponseDto> updateEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
         boolean isUpdated = employeeService.updateEmployee(employeeDto);
         if (isUpdated) {
@@ -169,6 +174,7 @@ public class EmployeeController {
             )
     })
     @DeleteMapping("/delete")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<ResponseDto> deleteEmployee(@RequestParam String employeeId) {
         boolean isDeleted = employeeService.deleteEmployee(employeeId);
         if (isDeleted) {

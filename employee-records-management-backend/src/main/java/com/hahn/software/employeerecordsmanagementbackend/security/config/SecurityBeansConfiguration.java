@@ -1,7 +1,5 @@
 package com.hahn.software.employeerecordsmanagementbackend.security.config;
 
-import com.hahn.software.employeerecordsmanagementbackend.security.dto.MyUserDetails;
-import com.hahn.software.employeerecordsmanagementbackend.security.entity.User;
 import com.hahn.software.employeerecordsmanagementbackend.security.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,11 +19,8 @@ public class SecurityBeansConfiguration {
     }
     @Bean
     UserDetailsService userDetailsService() {
-        return username -> {
-            User user = userRepository.getUserByUsername(username)
+        return username ->  userRepository.getUserByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-            return new MyUserDetails(user);
-        };
     }
     @Bean
     BCryptPasswordEncoder passwordEncoder() {

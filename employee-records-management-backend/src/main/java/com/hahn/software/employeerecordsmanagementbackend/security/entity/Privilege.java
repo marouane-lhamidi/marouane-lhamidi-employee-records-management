@@ -8,22 +8,14 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "privileges")
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder @ToString
-public class Role extends BaseEntity implements Serializable {
+public class Privilege extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "roles_privileges",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "privilege_id")
-    )
-    private Collection<Privilege> privileges;
+    @ManyToMany(mappedBy = "privileges")
+    private Collection<Role> roles;
 }

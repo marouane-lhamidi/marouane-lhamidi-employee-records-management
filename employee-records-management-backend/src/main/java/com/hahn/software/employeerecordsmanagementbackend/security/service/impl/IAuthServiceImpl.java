@@ -2,14 +2,12 @@ package com.hahn.software.employeerecordsmanagementbackend.security.service.impl
 
 import com.hahn.software.employeerecordsmanagementbackend.security.dto.LoginRequest;
 import com.hahn.software.employeerecordsmanagementbackend.security.dto.LoginResponse;
-import com.hahn.software.employeerecordsmanagementbackend.security.dto.MyUserDetails;
 import com.hahn.software.employeerecordsmanagementbackend.security.entity.User;
 import com.hahn.software.employeerecordsmanagementbackend.security.repository.UserRepository;
 import com.hahn.software.employeerecordsmanagementbackend.security.service.IAuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service @AllArgsConstructor
@@ -29,7 +27,7 @@ public class IAuthServiceImpl implements IAuthService {
         );
         User authenticatedUser = userRepository.getUserByUsername(request.getUsername())
                 .orElseThrow();
-        String jwtToken = jwtService.generateToken(new MyUserDetails(authenticatedUser));
+        String jwtToken = jwtService.generateToken(authenticatedUser);
 
         return LoginResponse.builder()
                 .token(jwtToken)

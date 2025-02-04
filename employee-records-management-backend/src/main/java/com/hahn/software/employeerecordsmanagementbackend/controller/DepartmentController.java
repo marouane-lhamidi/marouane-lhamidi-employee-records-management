@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +50,7 @@ public class DepartmentController {
                     )
             )
     })
+    @PreAuthorize("hasAuthority('CREATE')")
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createDepartment(@Valid @RequestBody DepartmentDto departmentDto) {
         departmentService.createDepartment(departmentDto);
@@ -85,6 +87,7 @@ public class DepartmentController {
             )
     })
     @GetMapping("/fetch")
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<DepartmentDto> fetchDepartment(@RequestParam String departmentName) {
         DepartmentDto departmentDto = departmentService.fetchDepartment(departmentName);
         return ResponseEntity.status(HttpStatus.OK).body(departmentDto);
@@ -108,6 +111,7 @@ public class DepartmentController {
             )
     })
     @GetMapping("/fetchAll")
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<List<DepartmentDto>> fetchAllDepartments() {
         List<DepartmentDto> departments = departmentService.fetchAllDepartments();
         return ResponseEntity.status(HttpStatus.OK).body(departments);
@@ -135,6 +139,7 @@ public class DepartmentController {
             )
     })
     @PutMapping("/update")
+    @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<ResponseDto> updateDepartment(@Valid @RequestBody DepartmentDto departmentDto) {
         boolean isUpdated = departmentService.updateDepartment(departmentDto);
         if(isUpdated) {
@@ -170,6 +175,7 @@ public class DepartmentController {
             )
     })
     @DeleteMapping("/delete")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<ResponseDto> deleteDepartment(@RequestParam String departmentName) {
         boolean isDeleted = departmentService.deleteDepartment(departmentName);
         if(isDeleted) {
