@@ -34,17 +34,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(validationErrors, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDto> handelGlobalException(Exception exception,
-                                                                  WebRequest webRequest){
-        ErrorResponseDto errorResponseDTO = ErrorResponseDto.builder()
-                .errorMessage(exception.getMessage())
-                .errorTime(LocalDateTime.now())
-                .errorCode(HttpStatus.INTERNAL_SERVER_ERROR)
-                .apiPath(webRequest.getDescription(false))
-                .build();
-        return new ResponseEntity<>(errorResponseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
-    }@ExceptionHandler(ResourceNotFoundException.class)
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ErrorResponseDto> handelGlobalException(Exception exception, WebRequest webRequest) {
+//        ErrorResponseDto errorResponseDTO = ErrorResponseDto.builder()
+//                .errorMessage(exception.getMessage())
+//                .errorTime(LocalDateTime.now())
+//                .errorCode(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .apiPath(webRequest.getDescription(false))
+//                .build();
+//        return new ResponseEntity<>(errorResponseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+    @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handleResourceNotFoundException(ResourceNotFoundException exception,
                                                                             WebRequest webRequest){
         ErrorResponseDto errorResponseDTO = ErrorResponseDto.builder()

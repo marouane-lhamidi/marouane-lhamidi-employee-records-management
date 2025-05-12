@@ -25,5 +25,5 @@ springdoc:
 
 security:
   jwt:
-    secret-key: 19dc91470f9aa7d33cd6a18982f8913e8709e7768987326439e7b235f7fb9717
+    secret-key: TrjbQPi8Y12TSPg52K2HJ7MQFiJYd5WNlvkkc0KUIosXwcLYGJzJ1E7aiF9WmCPqpWImI6j7QmISpNHEbC0vKQ
     expiration-time: 3600000

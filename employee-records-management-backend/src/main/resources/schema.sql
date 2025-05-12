@@ -3,7 +3,10 @@ CREATE TABLE IF NOT EXISTS `users` (
     `username` VARCHAR(45) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     `email` VARCHAR(100) NOT NULL UNIQUE,
-    `enabled` BOOLEAN NOT NULL DEFAULT TRUE
+    `enabled` BOOLEAN NOT NULL DEFAULT TRUE,
+    `expiration_date` DATETIME,
+    `password_expiration_date` DATETIME,
+    `is_temporary_password` BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS `roles` (
@@ -60,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
 
 
 -- Insert predefined roles
-INSERT INTO `roles` (`name`) VALUES ('ADMIN'), ('HR'), ('MANAGER');
+INSERT INTO `roles` (`name`) VALUES ('ADMIN'), ('HR'), ('MANAGER'), ('USER');
 
 -- Insert predefined privileges
 INSERT INTO `privileges` (`name`) VALUES ('READ'), ('CREATE'), ('UPDATE'), ('LIMITED_UPDATE'), ('DELETE');
@@ -71,13 +74,15 @@ INSERT INTO `roles_privileges` (`role_id`, `privilege_id`) VALUES  (2, 1), (2, 2
 INSERT INTO `roles_privileges` (`role_id`, `privilege_id`) VALUES (3, 1), (3, 4); -- MANAGER has READ and LIMITED_UPDATE Privileges
 
 -- Insert sample users
-INSERT INTO `users` (`username`, `password`, `email`, `enabled`) VALUES
-     ('admin', '$2a$10$IqTJTjn39IU5.7sSCDQxzu3xug6z/LPU6IF0azE/8CkHCwYEnwBX.', 'admin@company.com', 1),
-     ('sara', '$2a$12$TNieojfQlbRC9FepldmCU.3KXmxeaiV2n2F0l73eY8TVMVcUdLd9e', 'sara@company.com', 1),
-     ('yassin', '$2a$12$V.K0IN1v/duWjvKHrHn.peeH4rwkl0yspxdGyrqIqGbx5vAWt6NzG', 'yassin@company.com', 1);
-
+INSERT INTO `users` (`username`, `password`, `email`, `enabled`, `expiration_date`, `password_expiration_date`, `is_temporary_password`) VALUES
+     ('admin', '$2a$10$IqTJTjn39IU5.7sSCDQxzu3xug6z/LPU6IF0azE/8CkHCwYEnwBX.', 'admin@company.com', 1, '2025-12-31 23:59:59', '2024-06-30 23:59:59', 0),
+     ('sara', '$2a$12$TNieojfQlbRC9FepldmCU.3KXmxeaiV2n2F0l73eY8TVMVcUdLd9e', 'sara@company.com', 1, '2025-12-31 23:59:59', '2024-06-30 23:59:59', 0),
+     ('yassin', '$2a$12$V.K0IN1v/duWjvKHrHn.peeH4rwkl0yspxdGyrqIqGbx5vAWt6NzG', 'yassin@company.com', 1, '2025-12-31 23:59:59', '2024-06-30 23:59:59', 0);
 -- Assign roles to users
 INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (1, 1); -- admin is ADMIN
+INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (1, 2); -- admin is HR
+INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (1, 3); -- admin is MANAGER
+INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (1, 4); -- admin is USER
 INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (2, 2); -- sara is HR
 INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (3, 3); -- yassin is MANAGER
 

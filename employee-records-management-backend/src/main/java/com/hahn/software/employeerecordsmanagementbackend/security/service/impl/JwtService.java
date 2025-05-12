@@ -7,6 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class JwtService implements IJwtService {
         // Add authorities to the token claims
         extraClaims.put("authorities", userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList()));
+                .distinct().collect(Collectors.toList()));
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
@@ -89,7 +90,8 @@ public class JwtService implements IJwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
+        byte[] decodedKey = Base64.getUrlDecoder().decode(secretKey);
+        return Keys.hmacShaKeyFor(decodedKey);
     }
+
 }

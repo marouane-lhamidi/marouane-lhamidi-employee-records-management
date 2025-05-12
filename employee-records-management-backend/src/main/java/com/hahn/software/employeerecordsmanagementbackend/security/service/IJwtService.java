@@ -3,8 +3,6 @@ package com.hahn.software.employeerecordsmanagementbackend.security.service;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.security.Key;
-import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
 

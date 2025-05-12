@@ -1,8 +1,8 @@
 package com.hahn.software.employeerecordsmanagementbackend.security.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.hahn.software.employeerecordsmanagementbackend.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -23,6 +23,9 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 
     private String email;
     private boolean enabled;
+    private Timestamp expirationDate;
+    private Timestamp passwordExpirationDate;
+    private boolean isTemporaryPassword;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

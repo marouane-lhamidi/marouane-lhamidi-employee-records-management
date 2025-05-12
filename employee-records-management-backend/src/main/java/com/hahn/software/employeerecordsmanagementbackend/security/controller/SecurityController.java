@@ -5,18 +5,26 @@ import com.hahn.software.employeerecordsmanagementbackend.security.dto.LoginResp
 import com.hahn.software.employeerecordsmanagementbackend.security.service.IAuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth") @AllArgsConstructor
+@RequestMapping("/api") @AllArgsConstructor
 public class SecurityController {
     private final IAuthService authService;
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         LoginResponse user = authService.login(request);
         return ResponseEntity.ok(user);
     }
+//    @PostMapping("/auth/refresh-token")
+//    public ResponseEntity<?> refreshToken(@RequestBody TokenRequest request) {
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @PostMapping("/auth/logout")
+//    public ResponseEntity<?> logout() {
+//        return ResponseEntity.ok().build();
+//    }
+//
+
 }
